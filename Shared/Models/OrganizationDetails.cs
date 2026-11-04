@@ -3,6 +3,7 @@ using System.ComponentModel.DataAnnotations.Schema;
 
 namespace MyBlazorApp.Shared.Models
 {
+    [Table("TreeViewData")]
     public class OrganizationDetails
     {
         [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
