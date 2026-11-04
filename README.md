@@ -22,17 +22,28 @@ The purpose of this project is to help developers understand how to integrate th
 
 ## Prerequisites
 Before running this project, ensure the following are installed:
-- [Visual Studio 2019 (version 16.6+)]( https://visualstudio.microsoft.com/downloads) (version 16.6 or later)  
-- [.NET Core SDK 3.1.3+](https://dotnet.microsoft.com/download/dotnet-core/3.1) or later  
-- ASP.NET Core environment setup  
+- [Visual Studio Code](https://code.visualstudio.com/) or [Visual Studio 2022](https://visualstudio.microsoft.com/vs/) (with the .NET 10 workload)
+- [.NET 10 SDK](https://dotnet.microsoft.com/download/dotnet/10.0)
+- SQL Server LocalDB
 
 ## Installation and Running the Application
-1. Clone or download the repository .
-2. Open the solution in Visual Studio 2019.
-3. In the **Server** project, update the database connection string in the `appsettings.json` file.
-4. Ensure that the `NorthWind.MDF` database file is correctly placed in the **Shared** project.
-5. Build and run the solution.
-6. Launch the application in the browser to view CRUD operations in the TreeView.
+
+### Clone and Open the Project
+1. Clone or download the repository.
+2. Open the solution file (`MyBlazorApp.sln`) in Visual Studio 2022 or Visual Studio Code.
+
+### Configure the Database Connection
+Update the database connection string in the **Server** project's `appsettings.json` file to point to your local `NORTHWND.MDF` file location:
+```json
+"ConnectionStrings": {
+  "EmployeeDatabase": "Data Source=(LocalDB)\\MSSQLLocalDB;AttachDbFilename='D:\\MyBlazorApp\\Shared\\App_Data\\NORTHWND.MDF';Integrated Security=True;Connect Timeout=30"
+}
+```
+
+### Run the Application
+1. Build the solution.
+2. Run the project (the **Server** project is the startup project).
+3. Open the application in the browser to view CRUD operations in the TreeView.
 
 ## Usage
 Run the application to:
@@ -49,17 +60,15 @@ This approach can be used for admin panels, file explorers, organizational chart
   https://blazor.syncfusion.com/documentation/introduction
 - **Blazor TreeView Getting Started:**  
   https://blazor.syncfusion.com/documentation/treeview/getting-started
-
-## Additional Resources
 - **TreeView Entity Framework data binding:**  
   https://blazor.syncfusion.com/documentation/treeview/data-binding/#entity-framework
 
 ## Troubleshooting
-- Verify the database file path in `appsettings.json`.
-- Ensure SQL Server LocalDB is accessible.
-- Rebuild the solution if Entity Framework migrations or packages fail.
+- Verify the database file path in `Server/appsettings.json`.
+- Ensure SQL Server LocalDB is installed and accessible.
+- Rebuild the solution if Entity Framework or TreeView components fail to load.
 - Check browser and server logs for runtime or API errors.
 
 ## Support
 For detailed API references, configuration options, and advanced scenarios, refer to the Syncfusion Blazor TreeView documentation links above.
-To get more help, check the [ASP.NET Core Blazor documentation](https://docs.microsoft.com/en-us/aspnet/core/blazor).
+To get more help, check the [ASP.NET Core Blazor documentation](https://learn.microsoft.com/en-us/aspnet/core/blazor/).
