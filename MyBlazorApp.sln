@@ -1,13 +1,12 @@
-﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
-# Visual Studio Version 16
-VisualStudioVersion = 16.0.30320.27
+# Visual Studio Version 17
+VisualStudioVersion = 17.0.31903.59
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "MyBlazorApp.Server", "Server\MyBlazorApp.Server.csproj", "{ADEB8C62-37B3-4DF3-9F21-B4F2691B5DC5}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "MyBlazorApp.Server", "MyBlazorApp.Server\MyBlazorApp.Server.csproj", "{ADEB8C62-37B3-4DF3-9F21-B4F2691B5DC5}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "MyBlazorApp.Client", "Client\MyBlazorApp.Client.csproj", "{4296FC0A-42DF-4649-9EB2-7448519FFFC9}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "MyBlazorApp.Client", "MyBlazorApp.Client\MyBlazorApp.Client.csproj", "{4296FC0A-42DF-4649-9EB2-7448519FFFC9}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "MyBlazorApp.Shared", "Shared\MyBlazorApp.Shared.csproj", "{24F5E8FA-7793-4951-B583-271DEF8B4B31}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "MyBlazorApp.Shared", "MyBlazorApp.Server\MyBlazorApp.Shared\MyBlazorApp.Shared.csproj", "{24F5E8FA-7793-4951-B583-271DEF8B4B31}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -16,9 +15,9 @@ Global
 	EndGlobalSection
 	GlobalSection(ProjectConfigurationPlatforms) = postSolution
 		{ADEB8C62-37B3-4DF3-9F21-B4F2691B5DC5}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{ADEB8C62-37B3-4DF3-9F21-B4F2691B5DC5}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{ADEB8C62-37B3-4DF3-9EB2-7448519FFFC9}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{ADEB8C62-37B3-4DF3-9F21-B4F2691B5DC5}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{ADEB8C62-37B3-4DF3-9F21-B4F2691B5DC5}.Release|Any CPU.Build.0 = Release|Any CPU
+		{ADEB8C62-37B3-4DF3-9F21-B4F2691B5DC4}.Release|Any CPU.Build.0 = Release|Any CPU
 		{4296FC0A-42DF-4649-9EB2-7448519FFFC9}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{4296FC0A-42DF-4649-9EB2-7448519FFFC9}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{4296FC0A-42DF-4649-9EB2-7448519FFFC9}.Release|Any CPU.ActiveCfg = Release|Any CPU

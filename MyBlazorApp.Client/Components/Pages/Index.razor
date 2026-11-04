@@ -1,0 +1,103 @@
+@page "/"
+@using MyBlazorApp.Shared
+@using MyBlazorApp.Shared.Models
+@inject HttpClient Http
+
+<div id="treeview">
+    <SfTreeView @ref="tree" TValue="OrganizationDetails" AllowEditing="true">
+        <TreeViewFieldsSettings TValue="OrganizationDetails"
+                                Id="Id" Text="Name" ParentID="ParentId" HasChildren="HasTeam" Expanded="IsExpanded">
+            <SfDataManager Url="api/Organization" Adaptor="Adaptors.WebApiAdaptor" CrossDomain="true"></SfDataManager>
+        </TreeViewFieldsSettings>
+        <TreeViewEvents TValue="OrganizationDetails" NodeClicked="TreeViewNodeClicked" NodeEdited="OnNodeEdited"></TreeViewEvents>
+    </SfTreeView>
+</div>
+<SfContextMenu TValue="MenuItemModel" Target="#treeview">
+    <MenuItems>
+        <MenuItem Text="Edit"></MenuItem>
+        <MenuItem Text="Add"></MenuItem>
+        <MenuItem Text="Remove"></MenuItem>
+    </MenuItems>
+    <MenuEvents TValue="MenuItemModel" ItemSelected="ContextMenuItemSelected"></MenuEvents>
+</SfContextMenu>
+
+@code {
+
+    SfTreeView<OrganizationDetails> tree;
+    string selectedId;
+    int index;
+
+    public void ContextMenuItemSelected(MenuEventArgs<MenuItemModel> args)
+    {
+        switch (args.Item.Text)
+        {
+            case "Edit":
+                RenameNode();
+                break;
+            case "Add":
+                AddNode();
+                break;
+            case "Remove":
+                RemoveNode();
+                break;
+            default:
+                selectedId = null;
+                break;
+        }
+    }
+
+    void RemoveNode()
+    {
+        string[] removeNode = new string[] { this.selectedId };
+        this.tree.RemoveNodes(removeNode);
+    }
+
+    protected override async Task OnInitializedAsync()
+    {
+        // To get the last item index from the db
+        int count = await Http.GetFromJsonAsync<int>("api/Organization/Index");
+        this.index = count + 1;
+    }
+
+    void AddNode()
+    {
+        var treeData = new List<OrganizationDetails>();
+        treeData.Add(new OrganizationDetails
+        {
+            Id = this.index,
+            Name = "New Entry",
+            ParentId = string.IsNullOrEmpty(selectedId) ? (int?)null : int.Parse(selectedId)
+        });
+        this.tree.AddNodes(treeData, this.selectedId);
+        this.index += 1;
+    }
+
+    async void RenameNode()
+    {
+        await tree.BeginEditAsync(this.selectedId);
+    }
+
+    public void TreeViewNodeClicked(NodeClickEventArgs args)
+    {
+        this.selectedId = null;
+        if (args.Event != null && args.Event.Name == "mousedown")
+        {
+            // To get the selected node id upon context menu click
+            var data = args.NodeData;
+            this.selectedId = data.Id.ToString();
+        }
+    }
+
+    private async Task OnNodeEdited(NodeEditEventArgs args)
+    {
+        var id = int.Parse(args.NodeData.Id);
+        var employee = new OrganizationDetails
+        {
+            Id = id,
+            Name = args.NewText.ToString(),
+            ParentId = int.Parse(args.NodeData.ParentID)
+        };
+        await Http.PutAsJsonAsync("api/Organization", employee);
+        await InvokeAsync(StateHasChanged);
+    }
+}
