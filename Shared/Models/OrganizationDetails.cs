@@ -1,8 +1,9 @@
-﻿using System.ComponentModel.DataAnnotations;
+using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 
-namespace MyBlazorApp.Data
+namespace MyBlazorApp.Shared.Models
 {
+    [Table("TreeViewData")]
     public class OrganizationDetails
     {
         [DatabaseGenerated(DatabaseGeneratedOption.Identity)]

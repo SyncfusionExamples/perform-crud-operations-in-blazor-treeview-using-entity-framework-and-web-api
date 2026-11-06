@@ -1,16 +1,11 @@
-﻿using Microsoft.EntityFrameworkCore;
-using System.Collections.Generic;
-using System.Linq;
-using MyBlazorApp.Data;
-using Microsoft.Extensions.Primitives;
-using Microsoft.AspNetCore.Http;
-using System;
+using Microsoft.EntityFrameworkCore;
+using MyBlazorApp.Shared.Models;
 
 namespace MyBlazorApp.Shared.DataAccess
 {
     public interface IOrganizationDataAccessLayer
     {
-        IEnumerable<OrganizationDetails> GetAllEmployees(IQueryCollection queryString);
+        IEnumerable<OrganizationDetails> GetAllEmployees();
         void AddEmployee(OrganizationDetails Employee);
         void UpdateEmployee(OrganizationDetails Employee);
         void DeleteEmployee(int id);
@@ -22,31 +17,18 @@ namespace MyBlazorApp.Shared.DataAccess
     {
         private readonly OrganizationContext _context;
         private List<OrganizationDetails> childEmployeeList = new List<OrganizationDetails>();
-       
+
         public OrganizationDataAccessLayer(OrganizationContext context)
         {
             _context = context;
         }
-        
+
         // returns the organization data from the data base
-        public IEnumerable<OrganizationDetails> GetAllEmployees(IQueryCollection queryString)
+        public IEnumerable<OrganizationDetails> GetAllEmployees()
         {
             try
             {
-                var data = _context.Organization.ToList();
-                if (queryString.Keys.Contains("$filter"))
-                {
-                    int skip = queryString.TryGetValue("$skip", out StringValues Skip) ? Convert.ToInt32(Skip[0]) : 0;
-                    int top = queryString.TryGetValue("$top", out StringValues Take) ? Convert.ToInt32(Take[0]) : data.Count();
-                    string filter = string.Join("", queryString["$filter"].ToString().Split(' ').Skip(2)); // get filter from querystring
-                    data = data.Where(d => d.ParentId.ToString() == filter).ToList();
-                    return data.Skip(skip).Take(top);
-                }
-                else
-                {
-                    data = data.Where(d => d.ParentId == null).ToList();
-                    return data;
-                }
+                return _context.Organization.ToList();
             }
             catch
             {
